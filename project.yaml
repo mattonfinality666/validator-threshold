@@ -1,0 +1,22 @@
+specVersion: "0.0.1"
+description: "This subquery indexes bond,reward and slash of each block, summarize total earning of an account"
+repository: "https://github.com/subquery/subql-examples"
+
+schema: "./schema.graphql"
+
+network:
+  endpoint: "wss://polkadot.api.onfinality.io/public-ws"
+  dictionary: https://api.subquery.network/sq/subquery/dictionary-polkadot
+
+dataSources:
+  - name: runtime
+    kind: substrate/Runtime
+    # for kusama startBlock: 1445458
+    startBlock: 1
+    mapping:
+      handlers:
+        - handler: handleBlock
+          kind: substrate/EventHandler
+          filter:
+            module: session
+            method: NewSession
